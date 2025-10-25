@@ -1,0 +1,3 @@
+1. Data Binding requires the data to be "Property". And don't forget to implement INotifyPropertyChanged interface for notifying the UI about property changes.
+2. Make sure when working cross multiple projects with WPF, set the "xmlns:local="clr-namespace:__NamespaceForTheCurrentProject__;assembly=__NameOfTheTargetProject__"". Otherwise, it will not recognize the types from other projects.
+3. Changing namespace of the project will break all the existing xmlns references in XAML files. So, be cautious while changing the namespace.

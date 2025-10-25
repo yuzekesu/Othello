@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace MainViewModel
+namespace Othello.ViewModel
 {
     /// <summary>
     /// Interaction logic for App.xaml
