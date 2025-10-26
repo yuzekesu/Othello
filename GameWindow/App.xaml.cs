@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace GameWindow
+namespace Othello.View
 {
     /// <summary>
     /// Interaction logic for App.xaml
