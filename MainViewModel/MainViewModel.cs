@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-
 namespace Othello.ViewModel
 {
     public class MainViewModel
@@ -35,7 +34,8 @@ namespace Othello.ViewModel
             NewGameCommand = new RelayCommand(_local_NewGameCommand);
             Action<object?> _local_ExitCommand = (something) =>
             {
-                System.Windows.Application.Current.Shutdown();
+                if (MessageBox.Show("Are you sure you want to exit?", "Exit Game", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    System.Windows.Application.Current.Shutdown();
             };
             ExitCommand = new RelayCommand(_local_ExitCommand);
         }
