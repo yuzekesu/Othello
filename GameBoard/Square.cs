@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameBoard
+namespace Othello.Model
 {
     public class Square
     {
@@ -22,5 +22,16 @@ namespace GameBoard
         }
 
         //ADD PropertyChangedEventHandler
+    }
+
+
+
+    //TEMP Player since it is not done yet
+    internal class Player
+    {
+        public string Name { get; set; }
+        public string Color { set; get; }
+        public Player() { }
+        public Player(string name, string color) { Name = name; Color = color; }
     }
 }

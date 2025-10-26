@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameBoard
+namespace Othello.Model
 {
     public class GameBoard
     {
@@ -34,8 +34,16 @@ namespace GameBoard
 
         public List<Square> GetValidMoves(string color)
         {
-            var moves = new List<Square>();
-
+            List<Square> moves = new List<Square>();
+            string opponentColor;
+            if (color == "White")
+            {
+                opponentColor = "Black";
+            }
+            else
+            {
+                opponentColor = "White";
+            }
 
             for (int row = 0; row < 8; row++)
             {
@@ -43,20 +51,38 @@ namespace GameBoard
                 {
                     if (Squares[row, col].Color == null)
                     {
-                        int r = row;
-                        int c = col;
-                        bool opponentFound = false;
                         for (int dirRow = -1; dirRow <= 1; dirRow++)
                         {
                             for (int dirCol = -1; dirCol <= 1; dirCol++)
                             {
+                                int r = row + dirRow;
+                                int c = col + dirCol;
+                                bool captureFound = false;
 
+                                while (r >= 0 && r < 8 && c >= 0 && c < 8)
+                                {
+                                    if (Squares[r, c].Color == color)
+                                    {
+                                        if (captureFound)
+                                        {
+                                            moves.Add(Squares[row, col]);
+                                        }
+                                        break;
+                                    }
+                                    else if (Squares[r, c].Color == opponentColor)
+                                    {
+                                        captureFound = true;
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+
+                                    r += dirRow;
+                                    c += dirCol;
+                                }
                             }
                         }
-
-
-
-
                     }
                 }
             }
@@ -67,20 +93,66 @@ namespace GameBoard
 
         public List<Square> GetFlippableDiscs(int row, int col, string color)
         {
-            var flippable = new List<Square>();
+            List<Square> flippableDiscs = new List<Square>();
+            string opponentColor;
+            if (color == "White")
+            {
+                opponentColor = "Black";
+            }
+            else
+            {
+                opponentColor = "White";
+            }
 
-            return flippable;
+            for (int dirRow = -1; dirRow <= 1; dirRow++)
+            {
+                for (int dirCol = -1; dirCol <= 1; dirCol++)
+                {
+                    int r = row + dirRow;
+                    int c = col + dirCol;
+                    List<Square> tempFlippableDiscs = new List<Square>();
+
+                    while (r >= 0 && r < 8 && c >= 0 && c < 8)
+                    {
+                        if (Squares[r, c].Color == opponentColor)
+                        {
+                            tempFlippableDiscs.Add(Squares[r, c]);
+                        }
+                        else if (Squares[r,c].Color == color) 
+                        {
+                            flippableDiscs.AddRange(tempFlippableDiscs);
+                            break;
+                        }
+                        else 
+                        {
+                            break; 
+                        }
+                        r = r + dirRow;
+                        c = c + dirCol;
+                    }
+                }
+            }
+
+            return flippableDiscs;
         }
 
 
         public bool ApplyMove(int row, int col, string color)
         {
+            Squares[row, col].Color = color;
             return true;
         }
 
         public bool IsFull()
         {
-            return false;
+            foreach (Square square in Squares)
+            {
+                if (square.Color == null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public int CountDiscs(string color)
