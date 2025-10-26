@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace Othello.ViewModel
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
         // private GameManager _gameManager;
         public ICommand SquareClickCommand { get; private init; }
@@ -38,13 +38,15 @@ namespace Othello.ViewModel
                     System.Windows.Application.Current.Shutdown();
             };
             ExitCommand = new RelayCommand(_local_ExitCommand);
+            StartNewGame();
         }
         public void StartNewGame()
         {
+            TryComputerTurn();
         }
         public void StartNewGameWithPlayers(/*Player player1, Player player2*/)
         {
-
+            TryComputerTurn();
         }
         async void TryComputerTurn()
         {
