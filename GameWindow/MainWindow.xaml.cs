@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GameWindow
+namespace Othello.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -19,6 +19,7 @@ namespace GameWindow
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }

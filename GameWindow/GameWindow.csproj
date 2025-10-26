@@ -6,6 +6,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <RootNamespace>Othello.View</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MainViewModel\MainViewModel.csproj" />
+    <ProjectReference Include="..\RelayCommand\RelayCommand.csproj" />
+  </ItemGroup>
 
 </Project>

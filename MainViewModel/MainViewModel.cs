@@ -5,15 +5,18 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
-namespace MainViewModel
+
+namespace Othello.ViewModel
 {
-    class MainViewModel
+    public class MainViewModel
     {
         // private GameManager _gameManager;
         public ICommand SquareClickCommand { get; private init; }
         public ICommand NewGameCommand { get; private init; }
+        public ICommand ExitCommand { get; private init; }
         public MainViewModel()
         {
             Action<object?> _local_HandleSquareClick = (something) =>
@@ -30,6 +33,11 @@ namespace MainViewModel
                 StartNewGameWithPlayers();
             };
             NewGameCommand = new RelayCommand(_local_NewGameCommand);
+            Action<object?> _local_ExitCommand = (something) =>
+            {
+                System.Windows.Application.Current.Shutdown();
+            };
+            ExitCommand = new RelayCommand(_local_ExitCommand);
         }
         public void StartNewGame()
         {
