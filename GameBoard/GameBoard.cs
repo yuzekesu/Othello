@@ -157,7 +157,17 @@ namespace Othello.Model
 
         public int CountDiscs(string color)
         {
-            return 0;
+            int discCount = 0;
+
+            foreach (Square square in Squares)
+            {
+                if (square.Color == color)
+                {
+                    discCount++;
+                }
+            }
+
+            return discCount;
         }
     }
 }
