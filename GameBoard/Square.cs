@@ -27,7 +27,7 @@ namespace Othello.Model
 
 
     //TEMP Player since it is not done yet
-    internal class Player
+    public class Player
     {
         public string Name { get; set; }
         public string Color { set; get; }

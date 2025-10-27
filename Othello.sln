@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModel", "ViewModel", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{26E51C85-ABBF-4C96-9475-65A994CFFF22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameManager", "GameManager\GameManager.csproj", "{14978E8B-0CF4-4D81-8890-BA837CF2BF42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{C6E1DF50-2569-494F-9262-5C3F8F41390B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6E1DF50-2569-494F-9262-5C3F8F41390B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6E1DF50-2569-494F-9262-5C3F8F41390B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14978E8B-0CF4-4D81-8890-BA837CF2BF42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14978E8B-0CF4-4D81-8890-BA837CF2BF42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14978E8B-0CF4-4D81-8890-BA837CF2BF42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14978E8B-0CF4-4D81-8890-BA837CF2BF42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{71B7DDA7-C0EE-4B32-B6B4-721DCC9CCB18} = {FCD369F0-E2BD-4FE7-A92B-0C067CF35ED6}
 		{CA96E82D-5565-4383-A70B-D0385A7BCCC7} = {FCD369F0-E2BD-4FE7-A92B-0C067CF35ED6}
 		{C6E1DF50-2569-494F-9262-5C3F8F41390B} = {26E51C85-ABBF-4C96-9475-65A994CFFF22}
+		{14978E8B-0CF4-4D81-8890-BA837CF2BF42} = {26E51C85-ABBF-4C96-9475-65A994CFFF22}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7BE190A2-053F-4AE9-BFD7-2807BF3EBE2A}
