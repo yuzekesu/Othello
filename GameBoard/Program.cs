@@ -64,12 +64,7 @@ namespace Othello.Model
                     if (validMoves.Contains(gameBoard.Squares[rowCoord, colCoord]))
                     {
                         gameBoard.ApplyMove(rowCoord, colCoord, currentPlayer.Color);
-                        List<Square> discToFlip = gameBoard.GetFlippableDiscs(rowCoord, colCoord, currentPlayer.Color);
-
-                        foreach (Square disc in discToFlip)
-                        {
-                            disc.Color = currentPlayer.Color;
-                        }
+                        
 
                         if (currentPlayer == p1)
                         {
