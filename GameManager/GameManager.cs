@@ -18,7 +18,8 @@ namespace Othello.Model
         public event Action GameDrawn;
 
         public GameManager(Player p1, Player p2) 
-        { 
+        {
+            Board = new GameBoard();
             Player1 = p1;
             Player2 = p2;
             CurrentPlayer = p1;
