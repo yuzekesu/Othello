@@ -31,7 +31,11 @@ namespace Othello.Model
             {
                 SwapPlayers();
                 BoardUpdated.Invoke(Board.Squares);
-                IsGameOver();
+                if (IsGameOver())
+                {
+                    EndGame();
+                }
+                
                 return true;
             }
             return false;
@@ -59,6 +63,11 @@ namespace Othello.Model
             {
                 return Player2;
             }
+        }
+
+        private void EndGame()
+        {
+            //Something
         }
 
         private bool IsGameOver()
