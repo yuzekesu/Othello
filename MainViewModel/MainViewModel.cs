@@ -8,18 +8,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Othello.View;
 
 namespace Othello.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-
         private GameManager _gameManager;
+        public ICommand DebugCommand { get; private init; }
         public ICommand SquareClickCommand { get; private init; }
         public ICommand NewGameCommand { get; private init; }
         public ICommand ExitCommand { get; private init; }
         public MainViewModel()
         {
+            Action<object?> _local_Debug = (something) =>
+            {
+                //Player player = new Player("Debug Player", "Black");
+                //OnGameWon(player);
+                OnGameDrawn();
+            };
+            DebugCommand = new RelayCommand(_local_Debug);
+
             Action<object?> _local_HandleSquareClick = (something) =>
             {
                 // convert something to Square
@@ -95,9 +104,11 @@ namespace Othello.ViewModel
         }
         void OnGameWon(Player winner)
         {
+            WinnerDialog w = new(Application.Current.MainWindow, winner.Name, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
         }
         void OnGameDrawn()
         {
+            DrawnDialog d = new(Application.Current.MainWindow, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
         }
         public void HandleSquareClick(Square square)
         {

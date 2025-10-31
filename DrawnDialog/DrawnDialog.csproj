@@ -9,8 +9,4 @@
     <RootNamespace>Othello.View</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MainViewModel\MainViewModel.csproj" />
-  </ItemGroup>
-
 </Project>

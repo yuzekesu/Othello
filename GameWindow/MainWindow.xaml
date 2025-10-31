@@ -15,7 +15,9 @@
             
             <MenuItem Header="_NewGame" Command="{Binding NewGameCommand}"/>
             <MenuItem Header="_Exit" Command="{Binding ExitCommand, Source={StaticResource MainViewModelKey}}"/>
-           
+            <MenuItem Header="_Debug">
+                <MenuItem Header="Debug Command" Command="{Binding DebugCommand, Source={StaticResource MainViewModelKey}}"/>
+            </MenuItem>
         </Menu>
     </DockPanel>
 </Window>
