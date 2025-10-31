@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,17 +32,25 @@ namespace Othello.Model
 
             if (valMoves.Count() != 0 && valMoves.Contains(Board.Squares[row, col]))
             {
-                if (Board.ApplyMove(row, col, CurrentPlayer.Color))
-                {
-                    SwapPlayers();
-                    BoardUpdated.Invoke(Board.Squares);
-                    if (IsGameOver())
-                    {
-                        EndGame();
-                    }
+                Board.ApplyMove(row, col, CurrentPlayer.Color);
+           
+                List<Square> discToFlip = Board.GetFlippableDiscs(row, col, CurrentPlayer.Color);
 
-                    return true;
+                foreach (Square square in discToFlip)
+                {
+                    square.Color = CurrentPlayer.Color;
                 }
+
+
+                SwapPlayers();
+                BoardUpdated.Invoke(Board.Squares);
+                if (IsGameOver())
+                {
+                    EndGame();
+                }
+
+                return true;
+                
             }
             
             return false;

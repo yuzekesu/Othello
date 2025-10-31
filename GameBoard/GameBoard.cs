@@ -137,24 +137,9 @@ namespace Othello.Model
         }
 
 
-        public bool ApplyMove(int row, int col, string color)
+        public void ApplyMove(int row, int col, string color)
         {
-            List<Square> 
-            List<Square> discToFlip = GetFlippableDiscs(row, col, color);
-
-            if (discToFlip.Count == 0)
-            {
-                return false;
-            }
-
             Squares[row, col].Color = color;
-
-            foreach (Square disc in discToFlip)
-            {
-                disc.Color = color;
-            }
-            
-            return true;
         }
 
         public bool IsFull()
