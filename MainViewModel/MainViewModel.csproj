@@ -13,6 +13,7 @@
     <ProjectReference Include="..\GameBoard\GameBoard.csproj" />
     <ProjectReference Include="..\GameManager\GameManager.csproj" />
     <ProjectReference Include="..\RelayCommand\RelayCommand.csproj" />
+    <ProjectReference Include="..\WinnerDialog\WinnerDialog.csproj" />
   </ItemGroup>
 
 </Project>
