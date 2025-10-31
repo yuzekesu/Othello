@@ -27,17 +27,23 @@ namespace Othello.Model
 
         public bool PlayMove(int row, int col)
         {
-            if (Board.ApplyMove(row, col, CurrentPlayer.Color))
+            List<Square> valMoves = Board.GetValidMoves(CurrentPlayer.Color);
+
+            if (valMoves.Count() != 0 && valMoves.Contains(Board.Squares[row, col]))
             {
-                SwapPlayers();
-                BoardUpdated.Invoke(Board.Squares);
-                if (IsGameOver())
+                if (Board.ApplyMove(row, col, CurrentPlayer.Color))
                 {
-                    EndGame();
+                    SwapPlayers();
+                    BoardUpdated.Invoke(Board.Squares);
+                    if (IsGameOver())
+                    {
+                        EndGame();
+                    }
+
+                    return true;
                 }
-                
-                return true;
             }
+            
             return false;
         }
 

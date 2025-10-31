@@ -16,7 +16,7 @@ namespace Othello.Model
             InitializeBoard();
         }
 
-        public void InitializeBoard()
+        private void InitializeBoard()
         {
             for (int row = 0; row < 8; row++)
             {
@@ -139,6 +139,7 @@ namespace Othello.Model
 
         public bool ApplyMove(int row, int col, string color)
         {
+            List<Square> 
             List<Square> discToFlip = GetFlippableDiscs(row, col, color);
 
             if (discToFlip.Count == 0)
