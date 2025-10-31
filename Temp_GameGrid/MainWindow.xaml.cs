@@ -1,4 +1,5 @@
 ﻿using Othello.Model;
+using Othello.ViewModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,8 +21,12 @@ namespace Othello.View
         public MainWindow()
         {
             InitializeComponent();
+            ICommand command = new RelayCommand(nothing);
             GameBoard board = new GameBoard();
-            Grid1.MakeGrid(board);
+            Grid1.MakeGrid(board,command);
+        }
+        void nothing(object? o)
+        {
         }
     }
 }

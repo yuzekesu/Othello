@@ -50,10 +50,21 @@ namespace Othello.ViewModel
             {
                 // convert something to Player1 and Player2
                 // depend on View implementation
-                Player player1 = new Player("Player 1", "Black");
-                Player player2 = new Player("Player 2", "White");
+                
+
+
+                Player player1 = new Player("grid.Player1Name", "grid.Player1Color");
+                Player player2 = new Player("grid.Player2Name", "grid.Player2Color");
 
                 StartNewGameWithPlayers(player1, player2);
+                if (something is not TempGrid || something is null)
+                {
+                    Exception e = new();
+                    MessageBox.Show($"Invalid parameters for new game.\n {e.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                TempGrid grid = something as TempGrid;
+                grid.MakeGrid(_gameManager.Board, SquareClickCommand);
             };
             NewGameCommand = new RelayCommand(_local_NewGameCommand);
             Action<object?> _local_ExitCommand = (something) =>

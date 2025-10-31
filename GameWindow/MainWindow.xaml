@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Othello.View"
+        xmlns:tempgrid="clr-namespace:Othello.View;assembly=Temp_GameGrid"
         xmlns:viewmodel="clr-namespace:Othello.ViewModel;assembly=MainViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -12,12 +13,13 @@
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            
-            <MenuItem Header="_NewGame" Command="{Binding NewGameCommand}"/>
+            <MenuItem Header="_NewGame" Command="{Binding NewGameCommand, Source={StaticResource MainViewModelKey}}" CommandParameter="{Binding ElementName=Grid1}"/>
             <MenuItem Header="_Exit" Command="{Binding ExitCommand, Source={StaticResource MainViewModelKey}}"/>
             <MenuItem Header="_Debug">
                 <MenuItem Header="Debug Command" Command="{Binding DebugCommand, Source={StaticResource MainViewModelKey}}"/>
             </MenuItem>
         </Menu>
+        <tempgrid:TempGrid x:Name="Grid1" DockPanel.Dock="Bottom"/>
+
     </DockPanel>
 </Window>

@@ -25,7 +25,7 @@ namespace Othello.View
         {
             InitializeComponent();
         }
-        public void MakeGrid(GameBoard Board) 
+        public void MakeGrid(GameBoard Board, ICommand command) 
         {
             if (Board == null) return;
             UniformGrid.Rows = 8;
@@ -40,6 +40,8 @@ namespace Othello.View
                     btn.Background = Board.Squares[i, j].Color == "Black" ? Brushes.Black :
                                      Board.Squares[i, j].Color == "White" ? Brushes.White :
                                      Brushes.Green;
+                    btn.Command = command;
+                    btn.CommandParameter = Board.Squares[i, j];
                     UniformGrid.Children.Add(btn);
                 }
             }

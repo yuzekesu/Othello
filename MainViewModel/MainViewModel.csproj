@@ -14,6 +14,7 @@
     <ProjectReference Include="..\GameBoard\GameBoard.csproj" />
     <ProjectReference Include="..\GameManager\GameManager.csproj" />
     <ProjectReference Include="..\RelayCommand\RelayCommand.csproj" />
+    <ProjectReference Include="..\Temp_GameGrid\Temp_GameGrid.csproj" />
     <ProjectReference Include="..\WinnerDialog\WinnerDialog.csproj" />
   </ItemGroup>
 

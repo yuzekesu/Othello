@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MainViewModel\MainViewModel.csproj" />
+    <ProjectReference Include="..\Temp_GameGrid\Temp_GameGrid.csproj" />
   </ItemGroup>
 
 </Project>
