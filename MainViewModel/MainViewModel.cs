@@ -86,20 +86,6 @@ namespace Othello.ViewModel
         void OnBoardUpdated(Square[,] board)
         {
             OnPropertyChanged(nameof(_gameManager.Board.Squares));
-            if (_gameManager.Board.IsFull() || _gameManager.Board.GetValidMoves(_gameManager.CurrentPlayer.Color).Count() == 0)
-            {
-                int score1 = _gameManager.Board.CountDiscs(_gameManager.Player1.Color);
-                int score2 = _gameManager.Board.CountDiscs(_gameManager.Player2.Color);
-                if (score1 > score2)
-                    OnGameWon(_gameManager.Player1);
-                else if (score2 > score1)
-                    OnGameWon(_gameManager.Player2);
-                else
-                    OnGameDrawn();
-            }
-            else {
-                // _gameManager.swapplayer
-            }
             TryComputerTurn();
         }
         void OnGameWon(Player winner)
