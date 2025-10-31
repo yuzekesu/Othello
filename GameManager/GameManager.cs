@@ -43,7 +43,7 @@ namespace Othello.Model
 
 
                 SwapPlayers();
-                //BoardUpdated.Invoke(Board.Squares);
+                BoardUpdated?.Invoke(Board.Squares);
                 if (IsGameOver())
                 {
                     EndGame();
