@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DrawnDialog\DrawnDialog.csproj" />
     <ProjectReference Include="..\GameBoard\GameBoard.csproj" />
     <ProjectReference Include="..\GameManager\GameManager.csproj" />
     <ProjectReference Include="..\RelayCommand\RelayCommand.csproj" />

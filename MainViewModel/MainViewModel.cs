@@ -23,8 +23,9 @@ namespace Othello.ViewModel
         {
             Action<object?> _local_Debug = (something) =>
             {
-                Player player = new Player("Debug Player", "Black");
-                OnGameWon(player);
+                //Player player = new Player("Debug Player", "Black");
+                //OnGameWon(player);
+                OnGameDrawn();
             };
             DebugCommand = new RelayCommand(_local_Debug);
 
@@ -107,6 +108,7 @@ namespace Othello.ViewModel
         }
         void OnGameDrawn()
         {
+            DrawnDialog d = new(Application.Current.MainWindow, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
         }
         public void HandleSquareClick(Square square)
         {
