@@ -5,11 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Othello.View"
         xmlns:tempgrid="clr-namespace:Othello.View;assembly=Temp_GameGrid"
-        xmlns:viewmodel="clr-namespace:Othello.ViewModel;assembly=MainViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
-        <viewmodel:MainViewModel x:Key="MainViewModelKey"/>
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">

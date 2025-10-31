@@ -27,24 +27,24 @@ namespace Othello.View
         }
         public void MakeGrid(GameBoard Board, ICommand command) 
         {
-            if (Board == null) return;
-            UniformGrid.Rows = 8;
-            UniformGrid.Columns = 8;
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    Button btn = new Button();
-                    btn.Margin = new Thickness(1);
-                    btn.Background = Brushes.Green;
-                    btn.Background = Board.Squares[i, j].Color == "Black" ? Brushes.Black :
-                                     Board.Squares[i, j].Color == "White" ? Brushes.White :
-                                     Brushes.Green;
-                    btn.Command = command;
-                    btn.CommandParameter = Board.Squares[i, j];
-                    UniformGrid.Children.Add(btn);
-                }
-            }
+            //if (Board == null) return;
+            //UniformGrid.Rows = 8;
+            //UniformGrid.Columns = 8;
+            //for (int i = 0; i < 8; i++)
+            //{
+            //    for (int j = 0; j < 8; j++)
+            //    {
+            //        Button btn = new Button();
+            //        btn.Margin = new Thickness(1);
+            //        btn.Background = Brushes.Green;
+            //        btn.Background = Board.Squares[i, j].Color == "Black" ? Brushes.Black :
+            //                         Board.Squares[i, j].Color == "White" ? Brushes.White :
+            //                         Brushes.Green;
+            //        btn.Command = command;
+            //        btn.CommandParameter = Board.Squares[i, j];
+            //        UniformGrid.Children.Add(btn);
+            //    }
+            //}
         }
     }
 }
