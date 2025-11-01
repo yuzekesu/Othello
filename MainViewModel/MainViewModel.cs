@@ -53,8 +53,8 @@ namespace Othello.ViewModel
                 
 
 
-                Player player1 = new Player("grid.Player1Name", "White");
-                Player player2 = new Player("grid.Player2Name", "Black");
+                Player player1 = new HumanPlayer("grid.Player1Name", "White");
+                Player player2 = new HumanPlayer("grid.Player2Name", "Black");
 
                 StartNewGameWithPlayers(player1, player2);
                 if (something is not TempGrid || something is null)
