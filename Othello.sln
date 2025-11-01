@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temp_GameGrid", "Temp_GameG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameGrid", "GameGrid\GameGrid.csproj", "{B291C10F-A5E5-4621-9948-62B5BA9A016A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{34B3C7F6-F190-4B89-855F-7C36F36B3119}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{B291C10F-A5E5-4621-9948-62B5BA9A016A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B291C10F-A5E5-4621-9948-62B5BA9A016A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B291C10F-A5E5-4621-9948-62B5BA9A016A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B3C7F6-F190-4B89-855F-7C36F36B3119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B3C7F6-F190-4B89-855F-7C36F36B3119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B3C7F6-F190-4B89-855F-7C36F36B3119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B3C7F6-F190-4B89-855F-7C36F36B3119}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="Test.View.GameGrid"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Test.View"
+        xmlns:converter="clr-namespace:Test.ViewModel"
+        mc:Ignorable="d"
+        d:DesignHeight="600" d:DesignWidth="600"
+        DataContext="{StaticResource MainViewModel}">
+
+    <UserControl.Resources>
+        <converter:ColorToBrush x:Key="ColorToBrush" />
+    </UserControl.Resources>
+
+    <DockPanel>
+        <ItemsControl ItemsSource="{Binding ObservSquares}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="8" Columns="8"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding SquareClickCommand, Source={StaticResource MainViewModel}}"
+                            CommandParameter="{Binding}" Background="{Binding Path=Color, Converter={StaticResource ColorToBrush}}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DockPanel>
+</UserControl>
