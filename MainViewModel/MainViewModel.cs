@@ -16,6 +16,7 @@ namespace Othello.ViewModel
     public class MainViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Square> ObservSquares { get; private set; }
+        public string CurrentPlayerName { get; private set; }
         private GameManager _gameManager;
         public ICommand DebugCommand { get; private init; }
         public ICommand SquareClickCommand { get; private init; }
@@ -72,6 +73,8 @@ namespace Othello.ViewModel
             _gameManager.BoardUpdated += OnBoardUpdated;
             _gameManager.GameWon += OnGameWon;
             _gameManager.GameDrawn += OnGameDrawn;
+            CurrentPlayerName = _gameManager.CurrentPlayer.Color.ToString();
+            OnPropertyChanged(nameof(CurrentPlayerName));
             StartNewGame();
         }
         async void TryComputerTurn()
@@ -81,6 +84,8 @@ namespace Othello.ViewModel
         }
         void OnBoardUpdated(Square[,] board)
         {
+            CurrentPlayerName = _gameManager.CurrentPlayer.Color;
+            OnPropertyChanged(nameof(CurrentPlayerName));
             OnPropertyChanged(nameof(_gameManager.Board.Squares));
             TryComputerTurn();
         }
