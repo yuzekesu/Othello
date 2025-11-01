@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Othello.Model;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Othello.ViewModel
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             String color = (String)value;
+            //int square = (int)parameter;*
             if (color == "Black")
             {
                 return System.Windows.Media.Brushes.Black;
@@ -25,6 +27,10 @@ namespace Othello.ViewModel
             }
             else
             {
+                //if (square % 2 == 1)
+                //{
+                //    return System.Windows.Media.Brushes.BurlyWood;
+                //}
                 return System.Windows.Media.Brushes.Green;
             }
         }
