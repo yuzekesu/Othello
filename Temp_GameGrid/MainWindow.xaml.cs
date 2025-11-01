@@ -21,9 +21,9 @@ namespace Othello.View
         public MainWindow()
         {
             InitializeComponent();
-            ICommand command = new RelayCommand(nothing);
-            GameBoard board = new GameBoard();
-            Grid1.MakeGrid(board,command);
+            //ICommand command = new RelayCommand(nothing);
+            //GameBoard board = new GameBoard();
+            //Grid1.MakeGrid(board,command);
         }
         void nothing(object? o)
         {

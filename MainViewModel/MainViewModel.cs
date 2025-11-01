@@ -1,19 +1,21 @@
-﻿using Othello.ViewModel;
-using Othello.Model;
+﻿using Othello.Model;
+using Othello.View;
+using Othello.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Othello.View;
 
 namespace Othello.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        public ObservableCollection<Square> ObservSquares { get; private set; }
         private GameManager _gameManager;
         public ICommand DebugCommand { get; private init; }
         public ICommand SquareClickCommand { get; private init; }
@@ -27,25 +29,15 @@ namespace Othello.ViewModel
                 //OnGameWon(player);
                 OnGameDrawn();
             };
-            DebugCommand = new RelayCommand(_local_Debug);
+            DebugCommand = new RelayCommand<object?>(_local_Debug);
 
-            Action<object?> _local_HandleSquareClick = (something) =>
+            Action<Square> _local_HandleSquareClick = (square) =>
             {
                 // convert something to Square
                 // depend on View implementation
-                if (something is not Square || something is null)
-                {
-                    Exception e = new();
-                    MessageBox.Show($"Invalid square clicked.\n {e.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                else
-                {
-                    Square square = (Square)something;
-                    HandleSquareClick(square);
-                }
+                HandleSquareClick(square);
             };
-            SquareClickCommand = new RelayCommand(_local_HandleSquareClick);
+            SquareClickCommand = new RelayCommand<Square>(_local_HandleSquareClick);
             Action<object?> _local_NewGameCommand = (something) =>
             {
                 // convert something to Player1 and Player2
@@ -57,28 +49,20 @@ namespace Othello.ViewModel
                 Player player2 = new Player("grid.Player2Name", "Black");
 
                 StartNewGameWithPlayers(player1, player2);
-                if (something is not TempGrid || something is null)
-                {
-                    Exception e = new();
-                    MessageBox.Show($"Invalid parameters for new game.\n {e.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                TempGrid grid = something as TempGrid;
-                grid.MakeGrid(_gameManager.Board, SquareClickCommand);
             };
-            NewGameCommand = new RelayCommand(_local_NewGameCommand);
+            NewGameCommand = new RelayCommand<object?>(_local_NewGameCommand);
             Action<object?> _local_ExitCommand = (something) =>
             {
                 if (MessageBox.Show("Are you sure you want to exit?", "Exit Game", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     System.Windows.Application.Current.Shutdown();
             };
-            ExitCommand = new RelayCommand(_local_ExitCommand);
-            StartNewGame();
+            ExitCommand = new RelayCommand<object?>(_local_ExitCommand);
         }
         public void StartNewGame()
         {
-            // new window to get player names and colors
-            // then call StartNewGameWithPlayers(p1, p2)
+            ObservSquares = new ObservableCollection<Square>(_gameManager.Board.Squares.Cast<Square>());
+            OnPropertyChanged(nameof(ObservSquares));
+            TryComputerTurn();
         }
         public void StartNewGameWithPlayers(Player player1, Player player2)
         {
@@ -88,7 +72,7 @@ namespace Othello.ViewModel
             _gameManager.BoardUpdated += OnBoardUpdated;
             _gameManager.GameWon += OnGameWon;
             _gameManager.GameDrawn += OnGameDrawn;
-            TryComputerTurn();
+            StartNewGame();
         }
         async void TryComputerTurn()
         {
