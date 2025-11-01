@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Player p1 = new Player("p1", "Black");
-            Player p2 = new Player("p2", "White");
+            Player p1 = new HumanPlayer("p1", "Black");
+            Player p2 = new HumanPlayer("p2", "White");
 
             GameManager gameManager = new GameManager(p1, p2);
 
