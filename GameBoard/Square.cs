@@ -51,9 +51,9 @@ namespace Othello.Model
     public class HumanPlayer : Player
     {
         public HumanPlayer(string name, string color) { Name = name; Color = color; }
-        public override Task<Square> MakeMove(GameBoard board)
+        public override async Task<Square> MakeMove(GameBoard board)
         {
-            return Task.FromResult<Square>(null);
+            return null;
         }
     }
 

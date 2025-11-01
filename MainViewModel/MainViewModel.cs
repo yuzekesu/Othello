@@ -45,7 +45,7 @@ namespace Othello.ViewModel
                 
 
 
-                Player player1 = new ComputerPlayer("grid.Player1Name", "White");
+                Player player1 = new HumanPlayer("grid.Player1Name", "White");
                 Player player2 = new ComputerPlayer("grid.Player2Name", "Black");
 
                 StartNewGameWithPlayers(player1, player2);
