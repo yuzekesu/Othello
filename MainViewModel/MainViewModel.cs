@@ -45,8 +45,8 @@ namespace Othello.ViewModel
                 
 
 
-                Player player1 = new HumanPlayer("grid.Player1Name", "White");
-                Player player2 = new HumanPlayer("grid.Player2Name", "Black");
+                Player player1 = new ComputerPlayer("grid.Player1Name", "White");
+                Player player2 = new ComputerPlayer("grid.Player2Name", "Black");
 
                 StartNewGameWithPlayers(player1, player2);
             };
@@ -76,7 +76,8 @@ namespace Othello.ViewModel
         }
         async void TryComputerTurn()
         {
-            // waiting GameManager
+            _gameManager.TryComputerMoveAsync();
+            OnPropertyChanged(nameof(ObservSquares));
         }
         void OnBoardUpdated(Square[,] board)
         {
@@ -93,6 +94,7 @@ namespace Othello.ViewModel
         }
         public void HandleSquareClick(Square square)
         {
+            if (_gameManager.CurrentPlayer is HumanPlayer)
             _gameManager.PlayMove(square.Row, square.Column);
         }
         public event PropertyChangedEventHandler? PropertyChanged;

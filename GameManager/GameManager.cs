@@ -56,6 +56,17 @@ namespace Othello.Model
             return false;
         }
 
+        public async Task TryComputerMoveAsync()
+        {
+            Square computerSquare = await CurrentPlayer.MakeMove(Board);
+            if (computerSquare != null)
+            {
+                PlayMove(computerSquare.Row, computerSquare.Column);
+            }
+            
+        }
+
+
         public void SwapPlayers()
         {
             if (CurrentPlayer == Player1)
