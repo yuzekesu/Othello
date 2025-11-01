@@ -24,7 +24,16 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Command="{Binding SquareClickCommand, Source={StaticResource MainViewModel}}"
-                            CommandParameter="{Binding}" Background="{Binding Path=Color, Converter={StaticResource ColorToBrush}}"/>
+                            CommandParameter="{Binding}">
+                        <Button.Background>
+                            <MultiBinding Converter="{StaticResource ColorToBrush}">
+                                <Binding Path="Color"/>
+                                <Binding Path="Row"/>
+                                <Binding Path="Column"/>
+                            </MultiBinding>
+                        </Button.Background>
+
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
