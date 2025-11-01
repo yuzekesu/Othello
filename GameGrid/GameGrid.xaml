@@ -4,9 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Othello.View"
+             xmlns:converter="clr-namespace:Othello.ViewModel;assembly=MainViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="500">
-    <UniformGrid x:Name="OthelloGrid" Rows="8" Columns="8" Margin="6">
-        <Button Background="Green"></Button>
-    </UniformGrid>
+             d:DesignHeight="500" d:DesignWidth="500"
+             DataContext="{StaticResource MainViewModel}">
+
+    <UserControl.Resources>
+        <converter:ColorToBrush x:Key="ColorToBrush" />
+    </UserControl.Resources>
+
+    <DockPanel>
+        <ItemsControl ItemsSource="{Binding ObservSquares}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="8" Columns="8"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding SquareClickCommand, Source={StaticResource MainViewModel}}"
+                            CommandParameter="{Binding}" Background="{Binding Path=Color, Converter={StaticResource ColorToBrush}}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DockPanel>
 </UserControl>

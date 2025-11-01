@@ -14,15 +14,15 @@ namespace Othello.ViewModel
         public Addition()
         {
             _A = 0;
-            EventHandlerAdd = new RelayCommand(Add); 
+            EventHandlerAdd = new RelayCommand<int>(Add); 
         }
         public int A { get { return _A; } set { _A = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("A")); } }
         private int _A;
-        public void Add(object? a)
+        public void Add(int a)
         {
-            int b;
-            if (!Int32.TryParse((string?)a,out b)) return;
-            A += b;   
+            //int b;
+            //if (!Int32.TryParse((string?)a,out b)) return;
+            A += a;   
         }
         public ICommand EventHandlerAdd { set; get; }
 

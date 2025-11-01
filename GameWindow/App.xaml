@@ -5,6 +5,6 @@
             xmlns:viewmodel="clr-namespace:Othello.ViewModel;assembly=MainViewModel"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <viewmodel:MainViewModel x:Key="MainViewModelKey"/>
+        <viewmodel:MainViewModel x:Key="MainViewModel"/>
     </Application.Resources>
 </Application>

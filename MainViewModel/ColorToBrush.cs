@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace Othello.ViewModel
 {
-    internal class ColorToBrush : IValueConverter
+    public class ColorToBrush : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
