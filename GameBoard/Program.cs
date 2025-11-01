@@ -7,8 +7,8 @@ namespace Othello.Model
         static void Main(string[] args)
         {
             GameBoard gameBoard = new GameBoard();
-            Player p1 = new Player("p1", "Black");
-            Player p2 = new Player("p2", "White");
+            Player p1 = new HumanPlayer("p1", "Black");
+            Player p2 = new HumanPlayer("p2", "White");
             Player currentPlayer = p1;
 
             while (!gameBoard.IsFull())
