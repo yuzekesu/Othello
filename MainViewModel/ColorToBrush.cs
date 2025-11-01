@@ -16,7 +16,7 @@ namespace Othello.ViewModel
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             String color = (String)value;
-            int square = (int)parameter;
+            //int square = (int)parameter;*
             if (color == "Black")
             {
                 return System.Windows.Media.Brushes.Black;
