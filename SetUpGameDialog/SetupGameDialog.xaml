@@ -15,6 +15,17 @@
             <GradientStop Color="DarkGreen" Offset="1"/>
         </LinearGradientBrush>
     </Window.Background>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1" Duration="0:0:1"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
     
     <StackPanel Margin="10">
         <TextBlock Text="Player 1 Name:" FontWeight="SemiBold"/>
