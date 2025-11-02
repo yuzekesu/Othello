@@ -41,8 +41,22 @@ namespace Othello.Model
                     square.Color = CurrentPlayer.Color;
                 }
 
+                Player oppositePlayer;
 
-                SwapPlayers();
+                if (CurrentPlayer == Player1)
+                {
+                    oppositePlayer = Player2;
+                }
+                else
+                {
+                    oppositePlayer = Player1;
+                }
+
+                if (Board.GetValidMoves(oppositePlayer.Color).Count() != 0)
+                {
+                    SwapPlayers();
+                }
+
                 BoardUpdated?.Invoke(Board.Squares);
                 if (IsGameOver())
                 {
