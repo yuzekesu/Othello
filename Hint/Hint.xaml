@@ -24,11 +24,25 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard >
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="0.2" To="0.1" Duration="0:0:0.5" RepeatBehavior="Forever" AutoReverse="True"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="0.2" To="0.1" Duration="0:0:0.5" RepeatBehavior="Forever" AutoReverse="True"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[1].(RotateTransform.Angle)" From="0" To="360" Duration="0:0:0.5" RepeatBehavior="Forever" AutoReverse="False"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
                         <Button.RenderTransformOrigin>
                             <Point X="0.5" Y="0.5"/>
                         </Button.RenderTransformOrigin> 
                         <Button.RenderTransform>
-                            <ScaleTransform ScaleX="0.1" ScaleY="0.1"/>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="0.1" ScaleY="0.1"/>
+                                <RotateTransform Angle="45"/>
+                            </TransformGroup>
                         </Button.RenderTransform>
                         <Button.BorderBrush>
                             <SolidColorBrush Color="Black" Opacity="0"/>
