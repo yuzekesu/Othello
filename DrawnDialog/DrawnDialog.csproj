@@ -9,4 +9,8 @@
     <RootNamespace>Othello.View</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WinnerDialog\WinnerDialog.csproj" />
+  </ItemGroup>
+
 </Project>

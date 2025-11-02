@@ -17,6 +17,9 @@ namespace Othello.View
     /// <summary>
     /// Interaction logic for DrawnDialog.xaml
     /// </summary>
+    /// <remarks>
+    /// A simple copy paste from <see cref="WinnerDialog"/>.
+    /// </remarks>
     public partial class DrawnDialog : Window
     {
         private DrawnDialog()

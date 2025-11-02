@@ -11,6 +11,9 @@ using System.Windows.Media;
 
 namespace Othello.ViewModel
 {
+    /// <summary>
+    /// for converting the square color from "String" to "Brushes" in WPF.
+    /// </summary>
     public class ColorToBrush : IMultiValueConverter
     {
         public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
@@ -19,7 +22,7 @@ namespace Othello.ViewModel
             int rowInput = (int)value[1];
             int colomnInput = (int)value[2];
             Random random = new Random();
-            SolidColorBrush brushes = new SolidColorBrush(Color.FromArgb(255, 255, 0, 255));
+            SolidColorBrush brushes = Brushes.Magenta;
             if (color == "Black")
             {
                 brushes = Brushes.Black;
@@ -46,7 +49,6 @@ namespace Othello.ViewModel
                 byte b = 0;
                 if ((rowInput + colomnInput) % 2 == 0)
                 {
-
                     r = (byte)(5 + e * 8 + e_reverse * 0 + (random.Next() % 10) - 5);
                     g = (byte)(125 - e * 3 - e_reverse * 3 + (random.Next() % 10) - 5);
                     b = (byte)(5 + e * 2 + e_reverse * 6 + (random.Next() % 10) - 5);
@@ -65,25 +67,8 @@ namespace Othello.ViewModel
 
         public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
         {
-            SolidColorBrush brushes = (SolidColorBrush)value;
-            string color = "Violet";
-            if (brushes == System.Windows.Media.Brushes.Black)
-            {
-                color = "Black";
-            }
-            else if (brushes == System.Windows.Media.Brushes.White)
-            {
-                color = "White";
-            }
-            else
-            {
-                color = "Green";
-            }
-            object[] result = new object[3];
-            result[0] = color;
-            result[1] = 0;
-            result[2] = 0;
-            return result;
+            // not use
+            return new object[1];
         }
     }
 }

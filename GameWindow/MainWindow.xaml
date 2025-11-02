@@ -15,9 +15,11 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_NewGame" Command="{Binding NewGameCommand, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=Grid1}"/>
             <MenuItem Header="_Exit" Command="{Binding ExitCommand, Source={StaticResource MainViewModel}}"/>
+            <!--
             <MenuItem Header="_Debug">
                 <MenuItem Header="Debug Command" Command="{Binding DebugCommand, Source={StaticResource MainViewModel}}"/>
             </MenuItem>
+            -->
         </Menu>
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding CurrentPlayerColor, Source={StaticResource MainViewModel}}" Height="26"  VerticalAlignment="Top" MaxHeight="26"/>
         <Grid DockPanel.Dock="Bottom">

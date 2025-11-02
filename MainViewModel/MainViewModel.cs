@@ -15,26 +15,35 @@ namespace Othello.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Square> ObservSquares { get; private set; }
-        public ObservableCollection<Square> Hint { get; private set; }
+        /// <summary>
+        /// the obserbable that has direct link to the GameBoard.
+        /// </summary>
+        public ObservableCollection<Square>? ObservSquares { get; private set; }
+
+        /// <summary>
+        /// the observable that has copy of the GameBoard.
+        /// </summary>
+        /// <remarks>
+        /// easiar to adding changes to the squares without affecting the real GameBoard.
+        /// </remarks>
+        public ObservableCollection<Square>? Hint { get; private set; }
          
         public string CurrentPlayerColor { get { return _currentPlayerColor; } private set { _currentPlayerColor = value; OnPropertyChanged(nameof(CurrentPlayerColor)); } }
-        private string _currentPlayerColor;
-        private GameManager _gameManager;
-        public ICommand DebugCommand { get; private init; }
+        private string _currentPlayerColor = string.Empty;
+
+        private GameManager? _gameManager;
         public ICommand SquareClickCommand { get; private init; }
         public ICommand NewGameCommand { get; private init; }
         public ICommand ExitCommand { get; private init; }
+        
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <remarks>
+        /// Currently only initializing all the <see cref="ICommand"/> here.
+        /// </remarks>
         public MainViewModel()
         {
-            Action<object?> _local_Debug = (something) =>
-            {
-                //Player player = new Player("Debug Player", "Black");
-                //OnGameWon(player);
-                OnGameDrawn();
-            };
-            DebugCommand = new RelayCommand<object?>(_local_Debug);
-
             Action<Square> _local_HandleSquareClick = (square) =>
             {
                 // convert something to Square
@@ -67,54 +76,103 @@ namespace Othello.ViewModel
             };
             ExitCommand = new RelayCommand<object?>(_local_ExitCommand);
         }
-        public void StartNewGame()
-        {
-            ObservSquares = new ObservableCollection<Square>(_gameManager.Board.Squares.Cast<Square>());
-            UpdateHint();
-            OnPropertyChanged(nameof(ObservSquares));
-            TryComputerTurn();
-        }
+
+        /// <summary>
+        /// Initializes a new game session with the specified players.
+        /// </summary>
+        /// <remarks>This method sets up a new game by creating a new instance of <see
+        /// cref="GameManager"/> with the provided players. It also subscribes to game events such as board updates,
+        /// game wins, and draws. The current player's color is updated, and the observable collection of squares is
+        /// refreshed to reflect the new game state.</remarks>
+        /// <param name="player1">The first player. Cannot be null.</param>
+        /// <param name="player2">The second player. Cannot be null.</param>
         public void StartNewGameWithPlayers(Player player1, Player player2)
         {
+            // Unsubscribe
+            if (_gameManager != null)
+            {
+                _gameManager.BoardUpdated -= OnBoardUpdated;
+                _gameManager.GameWon -= OnGameWon;
+                _gameManager.GameDrawn -= OnGameDrawn;
+            }
+
             // Replace the old game manager with a new one
             _gameManager = new GameManager(player1, player2);
             _gameManager.BoardUpdated += OnBoardUpdated;
             _gameManager.GameWon += OnGameWon;
             _gameManager.GameDrawn += OnGameDrawn;
             CurrentPlayerColor = _gameManager.CurrentPlayer.Color.ToString();
-            StartNewGame();
+            ObservSquares = new ObservableCollection<Square>(_gameManager.Board.Squares.Cast<Square>());
+            UpdateHint();
+            OnPropertyChanged(nameof(ObservSquares));
+            TryComputerTurn();
         }
+        /// <summary>
+        /// Do the ComputerPlayer turn.
+        /// </summary>
         async void TryComputerTurn()
         {
+            if (_gameManager == null) return;
             await _gameManager.TryComputerMoveAsync();
         }
+        /// <summary>
+        /// Handles updates to the game board and triggers necessary actions.
+        /// </summary>
+        /// <remarks>This method updates the current player's color in the view, refreshes hints, notifies observers for the play board of changes, and initiates the computer's turn if applicable.</remarks>
+        /// <param name="board">The current state of the game board represented as a two-dimensional array of <see cref="Square"/> objects.</param>
         void OnBoardUpdated(Square[,] board)
         {
+            if (_gameManager == null) return;
             CurrentPlayerColor = _gameManager.CurrentPlayer.Color.ToString();
             UpdateHint();
             OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
         }
+        /// <summary>
+        /// Displays a dialog indicating that the game has been won by a player.
+        /// </summary>
+        /// <remarks>This method creates and shows a dialog window to announce the winner of the game. The
+        /// dialog is centered on the main application window.</remarks>
+        /// <param name="winner">The player who won the game. Cannot be null.</param>
         void OnGameWon(Player winner)
         {
             WinnerDialog w = new(Application.Current.MainWindow, winner.Name, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
         }
+        /// <summary>
+        /// Handles the event when the game is drawn, initializing and displaying a dialog.
+        /// </summary>
+        /// <remarks>This method creates a new instance of <see cref="DrawnDialog"/> using the main
+        /// window's dimensions.</remarks>
         void OnGameDrawn()
         {
             DrawnDialog d = new(Application.Current.MainWindow, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
         }
+        /// <summary>
+        /// Handle the players click.
+        /// </summary>
+        /// <param name="square">The square that the player clicked</param>
         public void HandleSquareClick(Square square)
         {
+            if (_gameManager == null) return;
             if (_gameManager.CurrentPlayer is HumanPlayer)
             _gameManager.PlayMove(square.Row, square.Column);
         }
+
+        /// <summary>
+        /// Nothing Special here
+        /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        /// <summary>
+        /// Update the hint for the current turn. Do call it at the beginning of each turn.
+        /// </summary>
         private void UpdateHint()
         {
+            if (_gameManager == null) return;
+            if (ObservSquares == null) return;
             Hint = new ObservableCollection<Square>();
             List<Square>temp_hints = _gameManager.Board.GetValidMoves(CurrentPlayerColor);
             if (temp_hints != null) 
