@@ -180,7 +180,8 @@ namespace Othello.ViewModel
                 for (int i = 0; i < 64; i++) 
                 {
                     Square new_square = new Square();
-                    new_square.Color = ObservSquares[i].Color;
+                    new_square.Color = "Transparent";
+                    //new_square.Color = ObservSquares[i].Color != "White" && ObservSquares[i].Color != "Black" ? "Transparent" : ObservSquares[i].Color;
                     new_square.Row = ObservSquares[i].Row;
                     new_square.Column = ObservSquares[i].Column;
                     foreach (Square square_hint in temp_hints) 

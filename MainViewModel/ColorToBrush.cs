@@ -39,6 +39,10 @@ namespace Othello.ViewModel
             {
                 brushes = Brushes.Turquoise;
             }
+            else if (color == "Transparent")
+            {
+                brushes = Brushes.Transparent;
+            }
             else
             {
                 // euclidean_distance

@@ -26,6 +26,7 @@
         </Menu>
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding CurrentPlayerColor, Source={StaticResource MainViewModel}}" Height="26"  VerticalAlignment="Top" MaxHeight="26" FontWeight="Bold"/>
         <Grid DockPanel.Dock="Bottom">
+            <gamegrid:GameGrid/>
             <hint:Hint />
             <gamegrid:GameGrid Opacity="0.0"/>
         </Grid>
