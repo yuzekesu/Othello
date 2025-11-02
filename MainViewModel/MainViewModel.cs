@@ -43,12 +43,17 @@ namespace Othello.ViewModel
             {
                 // convert something to Player1 and Player2
                 // depend on View implementation
-                
 
 
-                Player player1 = new HumanPlayer("grid.Player1Name", "White");
-                Player player2 = new ComputerPlayer("grid.Player2Name", "Black");
-
+                SetupGameDialog set_up_dialog = new SetupGameDialog();
+                set_up_dialog.ShowDialog();
+                Player player1 = new ComputerPlayer("Error", "White");
+                Player player2 = new ComputerPlayer("Error", "Black");
+                if (set_up_dialog.Result != null) 
+                {
+                    player1 = set_up_dialog.Result.Player1Type == PlayerType.Human ? new HumanPlayer(set_up_dialog.Result.Player1Name, "Black") : new ComputerPlayer(set_up_dialog.Result.Player1Name, "Black");
+                    player2 = set_up_dialog.Result.Player2Type == PlayerType.Human ? new HumanPlayer(set_up_dialog.Result.Player2Name, "White") : new ComputerPlayer(set_up_dialog.Result.Player2Name, "White");
+                }
                 StartNewGameWithPlayers(player1, player2);
             };
             NewGameCommand = new RelayCommand<object?>(_local_NewGameCommand);
@@ -69,7 +74,6 @@ namespace Othello.ViewModel
         {
             // Replace the old game manager with a new one
             _gameManager = new GameManager(player1, player2);
-            OnPropertyChanged(nameof(_gameManager.Board.Squares));
             _gameManager.BoardUpdated += OnBoardUpdated;
             _gameManager.GameWon += OnGameWon;
             _gameManager.GameDrawn += OnGameDrawn;
@@ -80,14 +84,17 @@ namespace Othello.ViewModel
         async void TryComputerTurn()
         {
             _gameManager.TryComputerMoveAsync();
-            OnPropertyChanged(nameof(ObservSquares));
         }
         void OnBoardUpdated(Square[,] board)
         {
             CurrentPlayerName = _gameManager.CurrentPlayer.Color;
             OnPropertyChanged(nameof(CurrentPlayerName));
-            OnPropertyChanged(nameof(_gameManager.Board.Squares));
+            OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
+            for (int i = 0; i < 64; i++)
+            {
+                ObservSquares[i].Color = ObservSquares[i].Color;
+            }
         }
         void OnGameWon(Player winner)
         {
