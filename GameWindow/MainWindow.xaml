@@ -6,8 +6,11 @@
         xmlns:local="clr-namespace:Othello.View"
         xmlns:viewmodel="clr-namespace:Othello.ViewModel;assembly=MainViewModel"
         xmlns:gamegrid="clr-namespace:Othello.View;assembly=GameGrid"
+        xmlns:hint="clr-namespace:Othello.View;assembly=Hint"
         mc:Ignorable="d"
-        Title="Othello" Height="600" Width="600">
+        Title="Othello" Height="600" Width="600"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_NewGame" Command="{Binding NewGameCommand, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=Grid1}"/>
@@ -16,7 +19,10 @@
                 <MenuItem Header="Debug Command" Command="{Binding DebugCommand, Source={StaticResource MainViewModel}}"/>
             </MenuItem>
         </Menu>
-        <TextBlock DockPanel.Dock="Bottom" Text="{Binding CurrentPlayerName, Source={StaticResource MainViewModel}}" Height="26"  VerticalAlignment="Top" MaxHeight="26"/>
-        <gamegrid:GameGrid DockPanel.Dock="Bottom"/>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding CurrentPlayerColor, Source={StaticResource MainViewModel}}" Height="26"  VerticalAlignment="Top" MaxHeight="26"/>
+        <Grid DockPanel.Dock="Bottom">
+            <hint:Hint />
+            <gamegrid:GameGrid Opacity="0.0"/>
+        </Grid>
     </DockPanel>
 </Window>

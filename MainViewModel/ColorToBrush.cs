@@ -28,27 +28,35 @@ namespace Othello.ViewModel
             {
                 brushes = Brushes.White;
             }
+            else if (color == "Tomato")
+            {
+                brushes = Brushes.Tomato;
+            }
+            else if (color == "Turquoise")
+            {
+                brushes = Brushes.Turquoise;
+            }
             else
             {
                 // euclidean_distance
                 byte e = (byte)Math.Sqrt(Math.Pow(colomnInput, 2) + Math.Pow(rowInput, 2));
-                byte e_reverse = (byte)(11-e);
+                byte e_reverse = (byte)(11 - e);
                 byte r = 0;
                 byte g = 0;
                 byte b = 0;
                 if ((rowInput + colomnInput) % 2 == 0)
                 {
-                    
-                    r = (byte)(5    + e * 8 + e_reverse * 0 + (random.Next() % 10) - 5);
-                    g = (byte)(125  - e * 3 - e_reverse * 3 + (random.Next() % 10) - 5);
-                    b = (byte)(5    + e * 2 + e_reverse * 6 + (random.Next() % 10) - 5);
+
+                    r = (byte)(5 + e * 8 + e_reverse * 0 + (random.Next() % 10) - 5);
+                    g = (byte)(125 - e * 3 - e_reverse * 3 + (random.Next() % 10) - 5);
+                    b = (byte)(5 + e * 2 + e_reverse * 6 + (random.Next() % 10) - 5);
                     brushes = new SolidColorBrush(Color.FromArgb(255, r, g, b));
                 }
                 else
                 {
-                    r = (byte)(5    + e * 8 + e_reverse * 0 + (random.Next() % 10) - 5);
-                    g = (byte)(150  - e * 0 - e_reverse * 0 + (random.Next() % 10) - 5);
-                    b = (byte)(0    + e * 2 + e_reverse * 6 + (random.Next() % 10) - 5);
+                    r = (byte)(5 + e * 8 + e_reverse * 0 + (random.Next() % 10) - 5);
+                    g = (byte)(150 - e * 0 - e_reverse * 0 + (random.Next() % 10) - 5);
+                    b = (byte)(0 + e * 2 + e_reverse * 6 + (random.Next() % 10) - 5);
                     brushes = new SolidColorBrush(Color.FromArgb(255, r, g, b));
                 }
             }

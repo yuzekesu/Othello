@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Othello.View.Hint"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Othello.View"
+             xmlns:converter="clr-namespace:Othello.ViewModel;assembly=MainViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="500"
+             DataContext="{StaticResource MainViewModel}">
+
+    <UserControl.Resources>
+        <converter:ColorToBrush x:Key="ColorToBrush" />
+    </UserControl.Resources>
+
+    <DockPanel>
+        <ItemsControl ItemsSource="{Binding Hint}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="8" Columns="8"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button>
+                        <Button.Background>
+                            <MultiBinding Converter="{StaticResource ColorToBrush}">
+                                <Binding Path="Color"/>
+                                <Binding Path="Row"/>
+                                <Binding Path="Column"/>
+                            </MultiBinding>
+                        </Button.Background>
+
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DockPanel>
+</UserControl>

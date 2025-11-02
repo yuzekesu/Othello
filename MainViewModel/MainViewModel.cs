@@ -16,6 +16,7 @@ namespace Othello.ViewModel
     public class MainViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Square> ObservSquares { get; private set; }
+        public ObservableCollection<Square> Hint { get; private set; }
         public string CurrentPlayerName { get; private set; }
         private GameManager _gameManager;
         public ICommand DebugCommand { get; private init; }
@@ -68,6 +69,7 @@ namespace Othello.ViewModel
         {
             ObservSquares = new ObservableCollection<Square>(_gameManager.Board.Squares.Cast<Square>());
             OnPropertyChanged(nameof(ObservSquares));
+            UpdateHint();
             TryComputerTurn();
         }
         public void StartNewGameWithPlayers(Player player1, Player player2)
@@ -83,18 +85,15 @@ namespace Othello.ViewModel
         }
         async void TryComputerTurn()
         {
-            _gameManager.TryComputerMoveAsync();
+            await _gameManager.TryComputerMoveAsync();
         }
         void OnBoardUpdated(Square[,] board)
         {
             CurrentPlayerName = _gameManager.CurrentPlayer.Color;
+            UpdateHint();
             OnPropertyChanged(nameof(CurrentPlayerName));
             OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
-            for (int i = 0; i < 64; i++)
-            {
-                ObservSquares[i].Color = ObservSquares[i].Color;
-            }
         }
         void OnGameWon(Player winner)
         {
@@ -113,6 +112,31 @@ namespace Othello.ViewModel
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private void UpdateHint()
+        {
+            Hint = new ObservableCollection<Square>();
+            List<Square>temp_hints = _gameManager.Board.GetValidMoves(CurrentPlayerName);
+            if (temp_hints != null) 
+            {
+                for (int i = 0; i < 64; i++) 
+                {
+                    Square new_square = new Square();
+                    new_square.Color = ObservSquares[i].Color;
+                    new_square.Row = ObservSquares[i].Row;
+                    new_square.Column = ObservSquares[i].Column;
+                    foreach (Square square_hint in temp_hints) 
+                    {
+                        if ((square_hint.Row * 8) + square_hint.Column == i)
+                        {
+                            new_square.Color = _gameManager.CurrentPlayer.Color == "Black" ? "Turquoise" : "Tomato";
+                            break;
+                        }
+                    }
+                    Hint.Add(new_square);
+                }
+            }
+            OnPropertyChanged(nameof(Hint));
         }
     }
 }
