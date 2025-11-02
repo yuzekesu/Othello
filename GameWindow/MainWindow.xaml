@@ -11,6 +11,9 @@
         Title="Othello" Height="600" Width="600"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="/Opening.png" Stretch="Fill" TileMode="None"/>
+    </Window.Background>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_NewGame" Command="{Binding NewGameCommand, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=Grid1}"/>
@@ -21,7 +24,7 @@
             </MenuItem>
             -->
         </Menu>
-        <TextBlock DockPanel.Dock="Bottom" Text="{Binding CurrentPlayerColor, Source={StaticResource MainViewModel}}" Height="26"  VerticalAlignment="Top" MaxHeight="26"/>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding CurrentPlayerColor, Source={StaticResource MainViewModel}}" Height="26"  VerticalAlignment="Top" MaxHeight="26" FontWeight="Bold"/>
         <Grid DockPanel.Dock="Bottom">
             <hint:Hint />
             <gamegrid:GameGrid Opacity="0.0"/>

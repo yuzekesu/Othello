@@ -10,10 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Opening.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GameGrid\GameGrid.csproj" />
     <ProjectReference Include="..\GameManager\GameManager.csproj" />
     <ProjectReference Include="..\Hint\Hint.csproj" />
     <ProjectReference Include="..\MainViewModel\MainViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Opening.png" />
   </ItemGroup>
 
 </Project>
