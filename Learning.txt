@@ -5,3 +5,6 @@
 
 2025-10-26
 4. When the project name is changed, make sure to re-add the references to other projects as they might get broken.
+
+2025-11-02
+5. Seems like if you bind a list to a control, and you want to change element inside the list. It is enough to call PropertyChanged?.Invoke(__nameof(TheList)__) outside the list. The element inside the list doesn't seems to need to implement that interface.
