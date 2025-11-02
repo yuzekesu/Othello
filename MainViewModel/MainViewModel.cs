@@ -17,7 +17,9 @@ namespace Othello.ViewModel
     {
         public ObservableCollection<Square> ObservSquares { get; private set; }
         public ObservableCollection<Square> Hint { get; private set; }
-        public string CurrentPlayerName { get; private set; }
+         
+        public string CurrentPlayerColor { get { return _currentPlayerColor; } private set { _currentPlayerColor = value; OnPropertyChanged(nameof(CurrentPlayerColor)); } }
+        private string _currentPlayerColor;
         private GameManager _gameManager;
         public ICommand DebugCommand { get; private init; }
         public ICommand SquareClickCommand { get; private init; }
@@ -54,8 +56,8 @@ namespace Othello.ViewModel
                 {
                     player1 = set_up_dialog.Result.Player1Type == PlayerType.Human ? new HumanPlayer(set_up_dialog.Result.Player1Name, "Black") : new ComputerPlayer(set_up_dialog.Result.Player1Name, "Black");
                     player2 = set_up_dialog.Result.Player2Type == PlayerType.Human ? new HumanPlayer(set_up_dialog.Result.Player2Name, "White") : new ComputerPlayer(set_up_dialog.Result.Player2Name, "White");
+                    StartNewGameWithPlayers(player1, player2);
                 }
-                StartNewGameWithPlayers(player1, player2);
             };
             NewGameCommand = new RelayCommand<object?>(_local_NewGameCommand);
             Action<object?> _local_ExitCommand = (something) =>
@@ -68,8 +70,8 @@ namespace Othello.ViewModel
         public void StartNewGame()
         {
             ObservSquares = new ObservableCollection<Square>(_gameManager.Board.Squares.Cast<Square>());
-            OnPropertyChanged(nameof(ObservSquares));
             UpdateHint();
+            OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
         }
         public void StartNewGameWithPlayers(Player player1, Player player2)
@@ -79,8 +81,7 @@ namespace Othello.ViewModel
             _gameManager.BoardUpdated += OnBoardUpdated;
             _gameManager.GameWon += OnGameWon;
             _gameManager.GameDrawn += OnGameDrawn;
-            CurrentPlayerName = _gameManager.CurrentPlayer.Color.ToString();
-            OnPropertyChanged(nameof(CurrentPlayerName));
+            CurrentPlayerColor = _gameManager.CurrentPlayer.Color.ToString();
             StartNewGame();
         }
         async void TryComputerTurn()
@@ -89,9 +90,8 @@ namespace Othello.ViewModel
         }
         void OnBoardUpdated(Square[,] board)
         {
-            CurrentPlayerName = _gameManager.CurrentPlayer.Color;
+            CurrentPlayerColor = _gameManager.CurrentPlayer.Color.ToString();
             UpdateHint();
-            OnPropertyChanged(nameof(CurrentPlayerName));
             OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
         }
@@ -116,7 +116,7 @@ namespace Othello.ViewModel
         private void UpdateHint()
         {
             Hint = new ObservableCollection<Square>();
-            List<Square>temp_hints = _gameManager.Board.GetValidMoves(CurrentPlayerName);
+            List<Square>temp_hints = _gameManager.Board.GetValidMoves(CurrentPlayerColor);
             if (temp_hints != null) 
             {
                 for (int i = 0; i < 64; i++) 
