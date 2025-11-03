@@ -40,8 +40,22 @@ namespace Test.Model
                     square.Color = CurrentPlayer.Color;
                 }
 
+                Player oppositePlayer;
 
-                SwapPlayers();
+                if (CurrentPlayer == Player1)
+                {
+                    oppositePlayer = Player2;
+                }
+                else
+                {
+                    oppositePlayer = Player1;
+                }
+
+                if (Board.GetValidMoves(oppositePlayer.Color).Count() != 0)
+                {
+                    SwapPlayers();
+                }
+
                 BoardUpdated?.Invoke(Board.Squares);
                 if (IsGameOver())
                 {
@@ -54,6 +68,17 @@ namespace Test.Model
 
             return false;
         }
+
+        public async Task TryComputerMoveAsync()
+        {
+            Square computerSquare = await CurrentPlayer.MakeMove(Board);
+            if (computerSquare != null)
+            {
+                PlayMove(computerSquare.Row, computerSquare.Column);
+            }
+
+        }
+
 
         public void SwapPlayers()
         {

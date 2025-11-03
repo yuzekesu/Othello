@@ -13,7 +13,7 @@ namespace Test.ViewModel
         public Addition()
         {
             _A = 0;
-            EventHandlerAdd = new RelayCommand(Add);
+            //EventHandlerAdd = new RelayCommand(Add);
         }
         public int A { get { return _A; } set { _A = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("A")); } }
         private int _A;

@@ -23,6 +23,6 @@
                             CommandParameter="{Binding}" Background="{Binding Path=Color, Converter=ColorToBrush}">
                 </Button>
                 </DataTemplate>
-            </ItemsControl.ItemTemplate> "
+            </ItemsControl.ItemTemplate> 
 
 </UserControl>

@@ -25,10 +25,27 @@ namespace Test.Model
 
     public class ComputerPlayer : Player
     {
-        public ComputerPlayer(string name, string color) { Name = name; Color = color; }
-        public override Task<Square> MakeMove(GameBoard board)
+        List<int> numbersR = new List<int> { 2, 5 };
+        List<int> numbersC = new List<int> { 4, 6 };
+        int pListLoc = 0;
+        public ComputerPlayer(string name, string color) { Name = name; Color = color; pListLoc = 0; }
+        public override async Task<Square> MakeMove(GameBoard board)
         {
-            //Some logic and return the square that the logic makes instead of null
+            List<Square> validComputerMoves = board.GetValidMoves(this.Color);
+            await Task.Delay(1000);
+            if (validComputerMoves.Count() > 0)
+            {
+                Random randomGen = new Random();
+
+                if (pListLoc < 2)
+                {
+                    Square sq = new Square(numbersR[pListLoc], numbersC[pListLoc]);
+                    pListLoc++;
+                    return sq;
+                }
+
+                return validComputerMoves[randomGen.Next(validComputerMoves.Count())];
+            }
             return null;
         }
     }
