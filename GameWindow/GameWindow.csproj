@@ -14,10 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DiskGrid\DiskGrid.csproj" />
     <ProjectReference Include="..\GameGrid\GameGrid.csproj" />
     <ProjectReference Include="..\GameManager\GameManager.csproj" />
     <ProjectReference Include="..\Hint\Hint.csproj" />
     <ProjectReference Include="..\MainViewModel\MainViewModel.csproj" />
+    <ProjectReference Include="..\MonoDiskGrid\MonoDiskGrid.csproj" />
   </ItemGroup>
 
   <ItemGroup>

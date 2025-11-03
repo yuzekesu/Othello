@@ -23,11 +23,11 @@ namespace Othello.ViewModel
             int colomnInput = (int)value[2];
             Random random = new Random();
             SolidColorBrush brushes = Brushes.Magenta;
-            if (color == "Black")
+            if (color == "vBlack")
             {
                 brushes = Brushes.Black;
             }
-            else if (color == "White")
+            else if (color == "vWhite")
             {
                 brushes = Brushes.White;
             }

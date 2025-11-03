@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="Othello.View.MonoDiskGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Othello.View"
+             xmlns:converter="clr-namespace:Othello.ViewModel;assembly=MainViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="500"
+             DataContext="{StaticResource MainViewModel}">
+
+    <UserControl.Resources>
+        <converter:ColorToBrush x:Key="ColorToBrush" />
+    </UserControl.Resources>
+
+    <DockPanel>
+        <ItemsControl ItemsSource="{Binding MonoDisk}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="8" Columns="8"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Ellipse>
+                            <Ellipse.Fill>
+                                <MultiBinding Converter="{StaticResource ColorToBrush}">
+                                    <Binding Path="Color"/>
+                                    <Binding Path="Row"/>
+                                    <Binding Path="Column"/>
+                                </MultiBinding>
+                            </Ellipse.Fill>
+
+                            <Ellipse.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard >
+                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" From="2" To="1" Duration="0:0:0.5"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" From="2" To="1" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Ellipse.Triggers>
+
+                            <Ellipse.RenderTransformOrigin>
+                                <Point X="0.5" Y="0.5"/>
+                            </Ellipse.RenderTransformOrigin>
+                            <Ellipse.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                </TransformGroup>
+                            </Ellipse.RenderTransform>
+
+                        </Ellipse>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DockPanel>
+</UserControl>

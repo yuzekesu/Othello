@@ -27,9 +27,16 @@ namespace Othello.ViewModel
         /// easiar to adding changes to the squares without affecting the real GameBoard.
         /// </remarks>
         public ObservableCollection<Square>? Hint { get; private set; }
-         
+        public ObservableCollection<Square>? Disks { get; private set; }
+        public ObservableCollection<Square>? MonoDisk { get; private set; }
+
         public string CurrentPlayerColor { get { return _currentPlayerColor; } private set { _currentPlayerColor = value; OnPropertyChanged(nameof(CurrentPlayerColor)); } }
         private string _currentPlayerColor = string.Empty;
+
+        /// <summary>
+        /// for the animation in the view
+        /// </summary>
+        private string _lastColor = "Transparent";
 
         private GameManager? _gameManager;
         public ICommand SquareClickCommand { get; private init; }
@@ -48,6 +55,16 @@ namespace Othello.ViewModel
             {
                 // convert something to Square
                 // depend on View implementation
+                if (_gameManager == null) return;
+                if (square.Row == -1) return;
+                var valids = _gameManager.Board.GetValidMoves(_gameManager.CurrentPlayer.Color);
+                foreach (var valid in valids)
+                {
+                    if (square == valid)
+                    {
+                        UpdateMonoDisk(square);
+                    }
+                }
                 HandleSquareClick(square);
             };
             SquareClickCommand = new RelayCommand<Square>(_local_HandleSquareClick);
@@ -104,6 +121,8 @@ namespace Othello.ViewModel
             CurrentPlayerColor = _gameManager.CurrentPlayer.Color.ToString();
             ObservSquares = new ObservableCollection<Square>(_gameManager.Board.Squares.Cast<Square>());
             UpdateHint();
+            UpdateMonoDisk(new Square(-1,-1));
+            UpdateDisks();
             OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
         }
@@ -125,6 +144,7 @@ namespace Othello.ViewModel
             if (_gameManager == null) return;
             CurrentPlayerColor = _gameManager.CurrentPlayer.Color.ToString();
             UpdateHint();
+            UpdateDisks();
             OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
         }
@@ -173,6 +193,17 @@ namespace Othello.ViewModel
         {
             if (_gameManager == null) return;
             if (ObservSquares == null) return;
+
+            // haha, i dont know how to do this otherwise.
+            // the gettype does work for comparison ;(
+            // i read this "pattern maching" from the course book page 166 in case u wonder.
+            // it skips bot turn for displaying the hints.
+            switch (_gameManager.CurrentPlayer)
+            {
+                case ComputerPlayer _: return;
+                default:
+                    break;
+            }
             Hint = new ObservableCollection<Square>();
             List<Square>temp_hints = _gameManager.Board.GetValidMoves(CurrentPlayerColor);
             if (temp_hints != null) 
@@ -196,6 +227,48 @@ namespace Othello.ViewModel
                 }
             }
             OnPropertyChanged(nameof(Hint));
+        }
+        /// <summary>
+        /// For displaying the played moves upon the <see cref="GameBoard"/>
+        /// </summary>
+        private void UpdateDisks()
+        {
+            if (_gameManager == null) return;
+            if (ObservSquares == null) return;
+            Disks = new ObservableCollection<Square>();
+            for (int i = 0; i < 64; i++)
+            {
+                Square new_square = new Square();
+                new_square.Row = ObservSquares[i].Row;
+                new_square.Column = ObservSquares[i].Column;
+                new_square.Color = ObservSquares[i].Color == "Black" ? "vBlack" : ObservSquares[i].Color == "White" ? "vWhite": "Transparent";
+                Disks.Add(new_square);
+            }
+            OnPropertyChanged(nameof(Disks));
+        }
+        /// <summary>
+        /// For displaying the animation of the last move on the <see cref="GameBoard"/>
+        /// </summary>
+        /// <param name="player_move"></param>
+        private void UpdateMonoDisk(Square player_move)
+        {
+            if (_gameManager == null) return;
+            if (ObservSquares == null) return;
+            MonoDisk = new ObservableCollection<Square>();
+            for (int i = 0; i < 64; i++)
+            {
+                Square new_square = new Square();
+                new_square.Color = "Transparent";
+
+                new_square.Row = ObservSquares[i].Row;
+                new_square.Column = ObservSquares[i].Column;
+                if (ObservSquares[i].Row == player_move.Row && ObservSquares[i].Column == player_move.Column)
+                {
+                    new_square.Color = _gameManager.CurrentPlayer.Color == "Black" ? "vBlack" : "vWhite";
+                }
+                MonoDisk.Add(new_square);
+            }
+            OnPropertyChanged(nameof(MonoDisk));
         }
     }
 }

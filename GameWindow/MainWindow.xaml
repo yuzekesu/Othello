@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:Othello.View"
         xmlns:viewmodel="clr-namespace:Othello.ViewModel;assembly=MainViewModel"
         xmlns:gamegrid="clr-namespace:Othello.View;assembly=GameGrid"
+        xmlns:diskgrid="clr-namespace:Othello.View;assembly=DiskGrid"
+        xmlns:monodiskgrid="clr-namespace:Othello.View;assembly=MonoDiskGrid"
         xmlns:hint="clr-namespace:Othello.View;assembly=Hint"
         mc:Ignorable="d"
         Title="Othello" Height="600" Width="600"
@@ -26,8 +28,20 @@
         </Menu>
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding CurrentPlayerColor, Source={StaticResource MainViewModel}}" Height="26"  VerticalAlignment="Top" MaxHeight="26" FontWeight="Bold"/>
         <Grid DockPanel.Dock="Bottom">
+
+            <!-- Only display the green grids, im too lazy to make a another user control. dont u know how much time i spend on that "fade" visual effect that calculated by the euclid distans -->
             <gamegrid:GameGrid/>
+            
+            <!-- Disces on the game board -->
+            <diskgrid:DiskGrid/>
+
+            <!-- Last move animation -->
+            <monodiskgrid:MonoDiskGrid/>
+
+            <!-- Hints and animations -->
             <hint:Hint />
+            
+            <!-- The one that handle the logic -->
             <gamegrid:GameGrid Opacity="0.0"/>
         </Grid>
     </DockPanel>

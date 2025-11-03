@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 namespace Othello.View
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for MonoDiskGrid.xaml
     /// </summary>
     /// <remarks>
-    /// Only display the green grids.
+    /// This display only the last discs and its animation on the game board.
     /// </remarks>
-    public partial class GameGrid : UserControl
+    public partial class MonoDiskGrid : UserControl
     {
-        public GameGrid()
+        public MonoDiskGrid()
         {
             InitializeComponent();
         }

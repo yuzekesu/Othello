@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,14 +12,11 @@ using System.Windows.Shapes;
 namespace Othello.View
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    /// <remarks>
-    /// Only display the green grids.
-    /// </remarks>
-    public partial class GameGrid : UserControl
+    public partial class MainWindow : Window
     {
-        public GameGrid()
+        public MainWindow()
         {
             InitializeComponent();
         }

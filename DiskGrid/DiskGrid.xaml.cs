@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 namespace Othello.View
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for DiskGrid.xaml
     /// </summary>
     /// <remarks>
-    /// Only display the green grids.
+    /// This display all the disces on the game board.
     /// </remarks>
-    public partial class GameGrid : UserControl
+    public partial class DiskGrid : UserControl
     {
-        public GameGrid()
+        public DiskGrid()
         {
             InitializeComponent();
         }
