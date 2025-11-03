@@ -72,6 +72,10 @@ namespace Othello.Model
 
         public async Task TryComputerMoveAsync()
         {
+            if (Player1 is HumanPlayer || Player2 is HumanPlayer)
+            {
+                await Task.Delay(1000);
+            }
             Square computerSquare = await CurrentPlayer.MakeMove(Board);
             if (computerSquare != null)
             {
