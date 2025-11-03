@@ -120,6 +120,7 @@ namespace Othello.ViewModel
             _gameManager.GameDrawn += OnGameDrawn;
             CurrentPlayerColor = _gameManager.CurrentPlayer.Color.ToString();
             ObservSquares = new ObservableCollection<Square>(_gameManager.Board.Squares.Cast<Square>());
+            UpdateHint(true);
             UpdateHint();
             UpdateMonoDisk(new Square(-1,-1));
             UpdateDisks();
@@ -156,6 +157,7 @@ namespace Othello.ViewModel
         /// <param name="winner">The player who won the game. Cannot be null.</param>
         void OnGameWon(Player winner)
         {
+            UpdateHint(true);
             WinnerDialog w = new(Application.Current.MainWindow, winner.Name, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
         }
         /// <summary>
@@ -165,6 +167,7 @@ namespace Othello.ViewModel
         /// window's dimensions.</remarks>
         void OnGameDrawn()
         {
+            UpdateHint(true);
             DrawnDialog d = new(Application.Current.MainWindow, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
         }
         /// <summary>
@@ -189,8 +192,14 @@ namespace Othello.ViewModel
         /// <summary>
         /// Update the hint for the current turn. Do call it at the beginning of each turn.
         /// </summary>
-        private void UpdateHint()
+        private void UpdateHint(bool reset = false)
         {
+            if (reset)
+            {
+                Hint = new ObservableCollection<Square>();
+                OnPropertyChanged(nameof(Hint));
+                return;
+            }
             if (_gameManager == null) return;
             if (ObservSquares == null) return;
 
