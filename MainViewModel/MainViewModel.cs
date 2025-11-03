@@ -133,6 +133,11 @@ namespace Othello.ViewModel
         async void TryComputerTurn()
         {
             if (_gameManager == null) return;
+
+            if (_gameManager.Player1 is HumanPlayer || _gameManager.Player2 is HumanPlayer)
+            {
+                await Task.Delay(500);
+            }
             await _gameManager.TryComputerMoveAsync();
         }
         /// <summary>
