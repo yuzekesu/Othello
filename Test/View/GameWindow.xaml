@@ -13,7 +13,8 @@
             <MenuItem Header="_NewGame" Command="{Binding NewGameCommand, Source={StaticResource MainViewModel}}"/>
             <MenuItem Header="_Exit" Command="{Binding ExitCommand, Source={StaticResource MainViewModel}}"/>
         </Menu>
-
+        
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding CurrentPlayerColor, Source={StaticResource MainViewModel}}" Height="26"  VerticalAlignment="Top" MaxHeight="26" FontWeight="Bold"/>
         <local:GameGrid x:Name="GameBoard" DockPanel.Dock="Bottom"/>
 
     </DockPanel>
