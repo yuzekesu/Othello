@@ -70,7 +70,7 @@ namespace Othello.Model
             return false;
         }
 
-        public async Task TryComputerMoveAsync()
+        public async Task<Square> TryComputerMoveAsync()
         {
             if (Player1 is HumanPlayer || Player2 is HumanPlayer)
             {
@@ -80,8 +80,9 @@ namespace Othello.Model
             if (computerSquare != null)
             {
                 PlayMove(computerSquare.Row, computerSquare.Column);
+            return computerSquare;
             }
-            
+            return new Square(-1,-1);
         }
 
 

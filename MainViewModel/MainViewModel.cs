@@ -62,7 +62,7 @@ namespace Othello.ViewModel
                 {
                     if (square == valid)
                     {
-                        UpdateMonoDisk(square);
+                        UpdateMonoDisk(valid);
                     }
                 }
                 HandleSquareClick(square);
@@ -138,7 +138,13 @@ namespace Othello.ViewModel
             {
                 await Task.Delay(500);
             }
-            await _gameManager.TryComputerMoveAsync();
+            Square _botMove = await _gameManager.TryComputerMoveAsync();
+
+            // update the monodisk when bot makes a move
+            if (_botMove.Row != -1)
+            {
+                UpdateMonoDisk(new Square(-1, -1));
+            }
         }
         /// <summary>
         /// Handles updates to the game board and triggers necessary actions.
@@ -153,8 +159,6 @@ namespace Othello.ViewModel
             UpdateDisks();
             OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
-            UpdateHint();
-            UpdateDisks();
         }
         /// <summary>
         /// Displays a dialog indicating that the game has been won by a player.

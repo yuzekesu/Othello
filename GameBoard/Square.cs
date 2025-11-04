@@ -67,10 +67,39 @@ namespace Othello.Model
             if (validComputerMoves.Count() > 0)
             {
                 Random randomGen = new Random();
-                
+
                 return validComputerMoves[randomGen.Next(validComputerMoves.Count())];
             }
             return null;
         }
     }
+
+    // debug computer player
+
+    //public class ComputerPlayer : Player
+    //{
+    //    List<int> numbersR = new List<int> { 2, 5 };
+    //    List<int> numbersC = new List<int> { 4, 6 };
+    //    int pListLoc = 0;
+    //    public ComputerPlayer(string name, string color) { Name = name; Color = color; pListLoc = 0; }
+    //    public override async Task<Square> MakeMove(GameBoard board)
+    //    {
+    //        List<Square> validComputerMoves = board.GetValidMoves(this.Color);
+
+    //        if (validComputerMoves.Count() > 0)
+    //        {
+    //            Random randomGen = new Random();
+
+    //            if (pListLoc < 2)
+    //            {
+    //                Square sq = new Square(numbersR[pListLoc], numbersC[pListLoc]);
+    //                pListLoc++;
+    //                return sq;
+    //            }
+
+    //            return validComputerMoves[randomGen.Next(validComputerMoves.Count())];
+    //        }
+    //        return null;
+    //    }
+    //}
 }
