@@ -153,7 +153,8 @@ namespace Othello.ViewModel
             UpdateDisks();
             OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
-            OnPropertyChanged(nameof(ObservSquares));
+            UpdateHint();
+            UpdateDisks();
         }
         /// <summary>
         /// Displays a dialog indicating that the game has been won by a player.
