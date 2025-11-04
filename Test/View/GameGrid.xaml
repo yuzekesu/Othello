@@ -24,7 +24,9 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Command="{Binding SquareClickCommand, Source={StaticResource MainViewModel}}"
-                            CommandParameter="{Binding}" Background="{Binding Path=Color, Converter={StaticResource ColorToBrush}}"/>
+                            CommandParameter="{Binding}" Background="Green">
+                        <Ellipse Fill="{Binding Path=Color, Converter={StaticResource ColorToBrush}}" Width="45" Height="45" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

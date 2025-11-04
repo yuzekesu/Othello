@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Test.Model;
+using Test.View;
 
 namespace Test.ViewModel
 {
@@ -18,15 +19,7 @@ namespace Test.ViewModel
         /// </summary>
         public ObservableCollection<Square>? ObservSquares { get; private set; }
 
-        /// <summary>
-        /// the observable that has copy of the GameBoard.
-        /// </summary>
-        /// <remarks>
-        /// easiar to adding changes to the squares without affecting the real GameBoard.
-        /// </remarks>
         public ObservableCollection<Square>? Hint { get; private set; }
-        public ObservableCollection<Square>? Disks { get; private set; }
-        public ObservableCollection<Square>? MonoDisk { get; private set; }
 
         public string CurrentPlayerColor { get { return _currentPlayerColor; } private set { _currentPlayerColor = value; OnPropertyChanged(nameof(CurrentPlayerColor)); } }
         private string _currentPlayerColor = string.Empty;
@@ -56,26 +49,30 @@ namespace Test.ViewModel
                 if (_gameManager == null) return;
                 if (square.Row == -1) return;
                 var valids = _gameManager.Board.GetValidMoves(_gameManager.CurrentPlayer.Color);
-                foreach (var valid in valids)
-                {
-                    if (square == valid)
-                    {
-                        UpdateMonoDisk(square);
-                    }
-                }
+               
                 HandleSquareClick(square);
             };
             SquareClickCommand = new RelayCommand<Square>(_local_HandleSquareClick);
+
             Action<object?> _local_NewGameCommand = (something) =>
             {
                 // convert something to Player1 and Player2
                 // depend on View implementation
 
-                Player player1 = new HumanPlayer("hBlack", "Black");
-                Player player2 = new ComputerPlayer("cWhite", "White");
-                StartNewGameWithPlayers(player1, player2);
+
+                SetupGameDialog set_up_dialog = new SetupGameDialog();
+                set_up_dialog.ShowDialog();
+                Player player1 = new ComputerPlayer("Error", "White");
+                Player player2 = new ComputerPlayer("Error", "Black");
+                if (set_up_dialog.Result != null)
+                {
+                    player1 = set_up_dialog.Result.Player1Type == PlayerType.Human ? new HumanPlayer(set_up_dialog.Result.Player1Name, "Black") : new ComputerPlayer(set_up_dialog.Result.Player1Name, "Black");
+                    player2 = set_up_dialog.Result.Player2Type == PlayerType.Human ? new HumanPlayer(set_up_dialog.Result.Player2Name, "White") : new ComputerPlayer(set_up_dialog.Result.Player2Name, "White");
+                    StartNewGameWithPlayers(player1, player2);
+                }
             };
             NewGameCommand = new RelayCommand<object?>(_local_NewGameCommand);
+
             Action<object?> _local_ExitCommand = (something) =>
             {
                 if (MessageBox.Show("Are you sure you want to exit?", "Exit Game", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -83,6 +80,7 @@ namespace Test.ViewModel
             };
             ExitCommand = new RelayCommand<object?>(_local_ExitCommand);
         }
+
 
         /// <summary>
         /// Initializes a new game session with the specified players.
@@ -114,6 +112,8 @@ namespace Test.ViewModel
             OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
         }
+
+
         /// <summary>
         /// Do the ComputerPlayer turn.
         /// </summary>
@@ -123,6 +123,8 @@ namespace Test.ViewModel
             if (_gameManager.CurrentPlayer is ComputerPlayer)
             await _gameManager.TryComputerMoveAsync();
         }
+
+
         /// <summary>
         /// Handles updates to the game board and triggers necessary actions.
         /// </summary>
@@ -136,6 +138,8 @@ namespace Test.ViewModel
             OnPropertyChanged(nameof(ObservSquares));
             TryComputerTurn();
         }
+
+
         /// <summary>
         /// Displays a dialog indicating that the game has been won by a player.
         /// </summary>
@@ -144,8 +148,11 @@ namespace Test.ViewModel
         /// <param name="winner">The player who won the game. Cannot be null.</param>
         void OnGameWon(Player winner)
         {
-            //WinnerDialog w = new(Application.Current.MainWindow, winner.Name, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
+            //UpdateHint(true);
+            WinnerDialog w = new(Application.Current.MainWindow, winner.Name, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
         }
+
+
         /// <summary>
         /// Handles the event when the game is drawn, initializing and displaying a dialog.
         /// </summary>
@@ -153,8 +160,11 @@ namespace Test.ViewModel
         /// window's dimensions.</remarks>
         void OnGameDrawn()
         {
-            //DrawnDialog d = new(Application.Current.MainWindow, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
+            //UpdateHint(true);
+            DrawnDialog d = new(Application.Current.MainWindow, Application.Current.MainWindow.Width, Application.Current.MainWindow.Height);
         }
+
+
         /// <summary>
         /// Handle the players click.
         /// </summary>
@@ -174,6 +184,7 @@ namespace Test.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         /// <summary>
         /// Update the hint for the current turn. Do call it at the beginning of each turn.
         /// </summary>
@@ -222,47 +233,7 @@ namespace Test.ViewModel
             }
             OnPropertyChanged(nameof(Hint));
         }
-        /// <summary>
-        /// For displaying the played moves upon the <see cref="GameBoard"/>
-        /// </summary>
-        private void UpdateDisks()
-        {
-            if (_gameManager == null) return;
-            if (ObservSquares == null) return;
-            Disks = new ObservableCollection<Square>();
-            for (int i = 0; i < 64; i++)
-            {
-                Square new_square = new Square();
-                new_square.Row = ObservSquares[i].Row;
-                new_square.Column = ObservSquares[i].Column;
-                new_square.Color = ObservSquares[i].Color == "Black" ? "vBlack" : ObservSquares[i].Color == "White" ? "vWhite" : "Transparent";
-                Disks.Add(new_square);
-            }
-            OnPropertyChanged(nameof(Disks));
-        }
-        /// <summary>
-        /// For displaying the animation of the last move on the <see cref="GameBoard"/>
-        /// </summary>
-        /// <param name="player_move"></param>
-        private void UpdateMonoDisk(Square player_move)
-        {
-            if (_gameManager == null) return;
-            if (ObservSquares == null) return;
-            MonoDisk = new ObservableCollection<Square>();
-            for (int i = 0; i < 64; i++)
-            {
-                Square new_square = new Square();
-                new_square.Color = "Transparent";
-
-                new_square.Row = ObservSquares[i].Row;
-                new_square.Column = ObservSquares[i].Column;
-                if (ObservSquares[i].Row == player_move.Row && ObservSquares[i].Column == player_move.Column)
-                {
-                    new_square.Color = _gameManager.CurrentPlayer.Color == "Black" ? "vBlack" : "vWhite";
-                }
-                MonoDisk.Add(new_square);
-            }
-            OnPropertyChanged(nameof(MonoDisk));
-        }
+        
+        
     }
 }

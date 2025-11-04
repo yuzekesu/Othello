@@ -11,6 +11,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_NewGame" Command="{Binding NewGameCommand, Source={StaticResource MainViewModel}}"/>
+            <MenuItem Header="_Exit" Command="{Binding ExitCommand, Source={StaticResource MainViewModel}}"/>
         </Menu>
 
         <local:GameGrid x:Name="GameBoard" DockPanel.Dock="Bottom"/>
