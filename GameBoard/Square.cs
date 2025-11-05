@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Othello.Model
 {
+    /// <summary>
+    /// Class for the squares that the GameBoard is made up of. 
+    /// </summary>
     public class Square : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Attributes that a square has
+        /// </summary>
         public int Row { get; set; }
         public int Column { get; set; }
 
@@ -33,13 +39,16 @@ namespace Othello.Model
             Color = null;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 
+    /// <summary>
+    /// Abstract class of a Player
+    /// </summary>
     public abstract class Player
     {
         public string Name { get; set; }
@@ -48,6 +57,9 @@ namespace Othello.Model
         public abstract Task<Square> MakeMove(GameBoard board);
     }
 
+    /// <summary>
+    /// Human player which moves with clicks
+    /// </summary>
     public class HumanPlayer : Player
     {
         public HumanPlayer(string name, string color) { Name = name; Color = color; }
@@ -57,13 +69,24 @@ namespace Othello.Model
         }
     }
 
+    /// <summary>
+    /// Computer player that moves by taking a random square from valid moves.
+    /// </summary>
     public class ComputerPlayer : Player
     {
         public ComputerPlayer(string name, string color) { Name = name; Color = color; }
+
+        /// <summary>
+        /// ComputerPlayer makes ther random move
+        /// </summary>
+        /// <param name="board"> Copy of the current gameboard</param>
+        /// <returns></returns>
         public override async Task<Square> MakeMove(GameBoard board)
         {
             List<Square> validComputerMoves = board.GetValidMoves(this.Color);
             await Task.Delay(100);
+
+            //If valid move exist then return a random selected move. Else return null if no move can be made
             if (validComputerMoves.Count() > 0)
             {
                 Random randomGen = new Random();
@@ -74,7 +97,7 @@ namespace Othello.Model
         }
     }
 
-    // debug computer player
+    // DEBUG COMPUTERPLAYER
 
     //public class ComputerPlayer : Player
     //{
