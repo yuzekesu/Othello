@@ -2,6 +2,9 @@
 {
     internal class Program
     {
+        /// <summary>
+        /// TEST FOR THE GAME MANAGER, Type two values with one space inbetween to play a move (row first then column value)
+        /// </summary>
         static void Main(string[] args)
         {
             Player p1 = new HumanPlayer("p1", "Black");

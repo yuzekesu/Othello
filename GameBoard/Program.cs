@@ -4,6 +4,7 @@ namespace Othello.Model
 {
     internal class Program
     {
+        //To try the gameboard without the gamemanager
         static void Main(string[] args)
         {
             GameBoard gameBoard = new GameBoard();
