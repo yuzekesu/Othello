@@ -99,7 +99,16 @@ namespace Othello.ViewModel
                     StartNewGameWithPlayers(_gameManager.Player1, _gameManager.Player2);
                 }
             };
-            RestartCommand = new RelayCommand<object?>(_local_RestartCommand);
+            Func<object?, bool> _local_RestartCommand_canExcute = (something) =>
+            {
+                // convert something to Player1 and Player2
+                // depend on View implementation
+
+                if (_gameManager == null) return false;
+                if (_gameManager.Player1.Name == string.Empty) return false;
+                else return true;
+            };
+            RestartCommand = new RelayCommand<object?>(_local_RestartCommand, _local_RestartCommand_canExcute);
 
             Action<object?> _local_ExitCommand = (something) =>
             {
