@@ -41,6 +41,7 @@ namespace Othello.ViewModel
         private GameManager? _gameManager;
         public ICommand SquareClickCommand { get; private init; }
         public ICommand NewGameCommand { get; private init; }
+        public ICommand RestartCommand { get; private init; }
         public ICommand ExitCommand { get; private init; }
         
         /// <summary>
@@ -86,6 +87,20 @@ namespace Othello.ViewModel
                 }
             };
             NewGameCommand = new RelayCommand<object?>(_local_NewGameCommand);
+
+            Action<object?> _local_RestartCommand = (something) =>
+            {
+                // convert something to Player1 and Player2
+                // depend on View implementation
+
+                if (_gameManager == null) return;
+                if (_gameManager.Player1.Name != string.Empty)
+                {
+                    StartNewGameWithPlayers(_gameManager.Player1, _gameManager.Player2);
+                }
+            };
+            RestartCommand = new RelayCommand<object?>(_local_RestartCommand);
+
             Action<object?> _local_ExitCommand = (something) =>
             {
                 if (MessageBox.Show("Are you sure you want to exit?", "Exit Game", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)

@@ -19,6 +19,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_NewGame" Command="{Binding NewGameCommand, Source={StaticResource MainViewModel}}" CommandParameter="{Binding ElementName=Grid1}"/>
+            <MenuItem Header="_Restart" Command="{Binding RestartCommand, Source={StaticResource MainViewModel}}"/>
             <MenuItem Header="_Exit" Command="{Binding ExitCommand, Source={StaticResource MainViewModel}}"/>
             <!--
             <MenuItem Header="_Debug">
